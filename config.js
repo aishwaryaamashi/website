@@ -251,11 +251,11 @@ Forever & always your best friend 💙`,
       },
       {
         id: 9,
-        title: "The birthday Twirla incident",
+        title: "Birthday Incident",
         tag: "Core Memory 💃🏻",
         icon: "🩹",
         photo: null,
-        content: "On my birthday, when we both fell off a Twirla and you fractured your hand. Definitely chaotic, definitely terrifying in the moment, but now permanently etched in the 'legendary core memories' vault of our friendship."
+        content: "On my birthday, we both fell off a vehicle and you fractured your hand. Definitely chaotic, definitely terrifying in the moment, but now permanently etched in the legendary core memories vault of our friendship."
       }
     ],
     backButtonText: "Back to our little gifts ♡"
@@ -264,37 +264,48 @@ Forever & always your best friend 💙`,
   // -----------------------------------------------------------------
   // SCREEN 6: MY POEM 🩵
   // -----------------------------------------------------------------
-  // NOTE: No poem.txt was found in your project folder.
-  // Below is the clearly labeled placeholder. Paste your exact poem verses here!
   poemScreen: {
-    heading: "My Favourite Kind of Pretty",
+    heading: "My Favourite Kind of Pretty 💗",
     subheading: "A little rhyme dedicated to you ♡",
-    isPlaceholder: true,
-    missingNotice: "📌 Note: No 'poem.txt' file was found in your folder. You can easily paste your real poem into config.js under stanzas!",
+    isPlaceholder: false,
     stanzas: [
       [
-        "There's a beauty in the way you laugh,",
-        "Unfiltered, loud, and true,",
-        "In all the silly little things",
-        "That make you simply you."
+        "If beauty had a face,",
+        "I swear, it would look like you,",
+        "With those prettiest eyes I've ever seen,",
+        "And a heart as lovely as your view."
       ],
       [
-        "Not just the pretty smile you wear,",
-        "Or the kindness in your grace,",
-        "It’s the warmth you bring into my world,",
-        "And the light in every place."
+        "Your wavy hair has my whole heart,",
+        "Each little strand, a work of art.",
+        "And those cute cheeks? Oh, don't get me started,",
+        "One look at them, and I'm already defeated. 😭💋"
       ],
       [
-        "Through walks to school and late night talks,",
-        "Through every changed seat and year,",
-        "You've been my constant, gentle calm,",
-        "My favourite person here."
+        "A little kiss, a little bite,",
+        "You're just too cute, it's almost a crime.",
+        "And your tiny height, so perfectly sweet,",
+        "Like the universe made us to match,",
+        "Right down to our feet. 🫶🏻"
       ],
       [
-        "So here's to you on your special day,",
-        "Soft and bright and free,",
-        "You will always be, without a doubt,",
-        "My favourite kind of pretty. 🩵"
+        "But pretty faces aren't all you are,",
+        "You're my favourite person, my own little star.",
+        "You match my chaos, my humour, my vibe,",
+        "Like we share one brain, just split into two sides."
+      ],
+      [
+        "No one could ever match you, I swear it's true,",
+        "No one gets my weirdness quite like you do.",
+        "You're the kind of person who's impossible to replace,",
+        "My favourite laugh, my favourite soul, my favourite face. 💌"
+      ],
+      [
+        "And if I could bottle up one feeling forever,",
+        "It'd be all the little moments we spend together.",
+        "Because out of all the people this world could've made,",
+        "I'm so glad it made you,",
+        "My favourite kind of pretty, in every single way. 🎀💗"
       ]
     ],
     backButtonText: "Back to our little gifts ♡"
