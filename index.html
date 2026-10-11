@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, My Pretty Girl! 💙</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Dreamy Sparkles Background -->
+  <div class="sparkles-container" id="sparkles-container" aria-hidden="true"></div>
+  
+  <!-- Particle Canvas for Confetti -->
+  <canvas id="confetti-canvas" class="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- Main App Wrapper -->
+  <main class="app-wrapper">
+
+    <!-- =============================================================== -->
+    <!-- SCREEN 1: THE BIRTHDAY CAKE 🎂 -->
+    <!-- =============================================================== -->
+    <section id="screen-cake" class="screen active">
+      <div class="screen-content cake-screen-inner">
+        <div class="header-badge">Birthday Girl Edition 🎂</div>
+        <h1 class="main-title" id="cake-title">HAPPY BIRTHDAY, MY PRETTY GIRL!!</h1>
+        <p class="subtitle" id="cake-subtitle">I've made a little something just for you.</p>
+
+        <!-- Interactive Birthday Cake -->
+        <div class="cake-container" id="interactive-cake">
+          <div class="sparkle-aura" aria-hidden="true"></div>
+          
+          <!-- Candles Layer -->
+          <div class="candles-wrapper">
+            <div class="candle candle-1">
+              <div class="flame" id="flame-1"></div>
+              <div class="wick"></div>
+              <div class="candle-body"></div>
+              <div class="smoke" id="smoke-1"></div>
+            </div>
+            <div class="candle candle-2">
+              <div class="flame" id="flame-2"></div>
+              <div class="wick"></div>
+              <div class="candle-body"></div>
+              <div class="smoke" id="smoke-2"></div>
+            </div>
+            <div class="candle candle-3">
+              <div class="flame" id="flame-3"></div>
+              <div class="wick"></div>
+              <div class="candle-body"></div>
+              <div class="smoke" id="smoke-3"></div>
+            </div>
+          </div>
+
+          <!-- Cake Tiers -->
+          <div class="cake-tier tier-top">
+            <div class="frosting-drips">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="cake-ribbon"></div>
+          </div>
+          <div class="cake-tier tier-middle">
+            <div class="frosting-drips">
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="tier-dots">
+              <i></i><i></i><i></i><i></i><i></i>
+            </div>
+          </div>
+          <div class="cake-tier tier-bottom">
+            <div class="frosting-drips">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="cake-pearls"></div>
+          </div>
+          <div class="cake-plate"></div>
+        </div>
+
+        <!-- Interactive Buttons & Status -->
+        <div class="action-dock" id="cake-actions">
+          <!-- Step 1: Make a wish button -->
+          <button id="btn-make-wish" class="btn btn-primary btn-glow">
+            <span>Make a wish ✨</span>
+          </button>
+          
+          <!-- Step 2: Blow candles button (initially hidden) -->
+          <button id="btn-blow-candles" class="btn btn-primary btn-glow hidden">
+            <span>Blow the candles 🕯️</span>
+          </button>
+          
+          <!-- Step 3: Transition to Gifts (initially hidden) -->
+          <div id="cake-success-container" class="cake-success-message hidden">
+            <p class="wish-text" id="cake-wish-text">
+              Wish made? Good. Now let's make this birthday a little more special. 💙
+            </p>
+            <button id="btn-open-surprise" class="btn btn-accent btn-pulse">
+              <span>Open your surprise ♡</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =============================================================== -->
+    <!-- SCREEN 2: THE GIFT BOX 🎁 -->
+    <!-- =============================================================== -->
+    <section id="screen-giftbox" class="screen">
+      <div class="screen-content">
+        <div class="header-badge">Surprise Unlocked 🎁</div>
+        <h1 class="main-title" id="giftbox-title">Here's your gift, birthday girl! 💙</h1>
+        <p class="subtitle" id="giftbox-subtitle">Click the box to open your four special surprises:</p>
+
+        <!-- Interactive 3D Gift Box -->
+        <div class="giftbox-wrapper" id="giftbox-interactive" role="button" tabindex="0" aria-label="Open Gift Box">
+          <div class="gift-box-model" id="gift-box-model">
+            <!-- Ribbon & Bow -->
+            <div class="ribbon-bow">
+              <div class="bow-loop left"></div>
+              <div class="bow-loop right"></div>
+              <div class="bow-center"></div>
+              <div class="bow-tail left"></div>
+              <div class="bow-tail right"></div>
+            </div>
+            
+            <!-- Box Lid -->
+            <div class="box-lid">
+              <div class="lid-ribbon-v"></div>
+              <div class="lid-ribbon-h"></div>
+            </div>
+            
+            <!-- Box Body -->
+            <div class="box-body">
+              <div class="body-ribbon-v"></div>
+              <div class="body-ribbon-h"></div>
+              <div class="box-tag">For my Bestie 💙</div>
+            </div>
+
+            <!-- Sparkle burst inside -->
+            <div class="box-sparkles" aria-hidden="true"></div>
+          </div>
+          <div class="tap-hint" id="gift-tap-hint">Tap the box to open ✨</div>
+        </div>
+
+        <!-- 4 Gift Cards Section (Revealed after opening box) -->
+        <div class="gift-cards-grid hidden" id="gift-cards-grid">
+          <!-- Card 1: Letter -->
+          <div class="gift-card" id="card-letter" role="button" tabindex="0" data-target="screen-letter">
+            <div class="card-pin">📌</div>
+            <div class="card-badge">Gift 1</div>
+            <div class="card-icon">💌</div>
+            <h3 class="card-title">A little letter for you</h3>
+            <p class="card-desc">Straight from my heart to yours</p>
+            <span class="card-action">Read Letter →</span>
+          </div>
+
+          <!-- Card 2: Photo Album -->
+          <div class="gift-card" id="card-album" role="button" tabindex="0" data-target="screen-album">
+            <div class="card-pin">📌</div>
+            <div class="card-badge">Gift 2</div>
+            <div class="card-icon">📸</div>
+            <h3 class="card-title">Our Polaroid album</h3>
+            <p class="card-desc">Little pieces of us through the years</p>
+            <span class="card-action">Flip Photos →</span>
+          </div>
+
+          <!-- Card 3: Memories -->
+          <div class="gift-card" id="card-memories" role="button" tabindex="0" data-target="screen-memories">
+            <div class="card-pin">📌</div>
+            <div class="card-badge">Gift 3</div>
+            <div class="card-icon">🫂</div>
+            <h3 class="card-title">Our memories together</h3>
+            <p class="card-desc">The chaos, the walks, and the inside jokes</p>
+            <span class="card-action">Relive Memories →</span>
+          </div>
+
+          <!-- Card 4: Poem -->
+          <div class="gift-card" id="card-poem" role="button" tabindex="0" data-target="screen-poem">
+            <div class="card-pin">📌</div>
+            <div class="card-badge">Gift 4</div>
+            <div class="card-icon">🎀</div>
+            <h3 class="card-title">One little surprise for you</h3>
+            <p class="card-desc">My favourite kind of pretty</p>
+            <span class="card-action">Read Poem →</span>
+          </div>
+        </div>
+
+        <!-- Exploration Footer & Direct jump to Final Surprise -->
+        <div class="gift-footer-action hidden" id="gift-footer-action">
+          <div class="explored-tracker" id="explored-tracker">
+            Surprises explored: <span id="explored-count">0</span> of 4 💙
+          </div>
+          <button id="btn-goto-final" class="btn btn-secondary">
+            <span>Wait... there's one last thing 💌</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =============================================================== -->
+    <!-- SCREEN 3: MY BIRTHDAY LETTER 💌 -->
+    <!-- =============================================================== -->
+    <section id="screen-letter" class="screen">
+      <div class="screen-content narrow-content">
+        <nav class="back-nav">
+          <button class="btn btn-back" data-back-to="screen-giftbox">
+            ← Back to our little gifts ♡
+          </button>
+        </nav>
+
+        <div class="header-badge">Personal Note 💌</div>
+        <h1 class="main-title">A little letter for you ♡</h1>
+
+        <!-- Animated Envelope -->
+        <div class="envelope-container" id="letter-envelope-container">
+          <div class="envelope-wrapper" id="envelope-wrapper" role="button" tabindex="0" aria-label="Open Envelope">
+            <div class="envelope-back"></div>
+            <div class="envelope-flap" id="envelope-flap">
+              <div class="wax-seal">💙</div>
+            </div>
+            <div class="envelope-pocket"></div>
+            
+            <!-- Letter Sheet Sliding Out -->
+            <article class="letter-sheet" id="letter-sheet">
+              <div class="letter-header">
+                <span class="letter-date" id="letter-date">Special Birthday Edition</span>
+                <span class="letter-stamp">💌</span>
+              </div>
+              <div class="letter-body" id="letter-body">
+                <!-- Dynamically populated from config.js -->
+              </div>
+              <div class="letter-footer">
+                <p class="letter-signature" id="letter-signature">Always your girl ♡</p>
+              </div>
+            </article>
+          </div>
+          <p class="tap-hint" id="envelope-tap-hint">Tap the envelope to read your letter ✉️</p>
+        </div>
+
+        <div class="screen-footer-nav">
+          <button class="btn btn-primary" data-back-to="screen-giftbox">
+            Back to our little gifts ♡
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =============================================================== -->
+    <!-- SCREEN 4: OUR POLAROID PHOTO ALBUM 📸 -->
+    <!-- =============================================================== -->
+    <section id="screen-album" class="screen">
+      <div class="screen-content">
+        <nav class="back-nav">
+          <button class="btn btn-back" data-back-to="screen-giftbox">
+            ← Back to our little gifts ♡
+          </button>
+        </nav>
+
+        <div class="header-badge">Scrapbook Memories 📸</div>
+        <h1 class="main-title">Little pieces of us ♡</h1>
+        <p class="subtitle">Flip through our moments together or click any photo to enlarge!</p>
+
+        <!-- Polaroid Showcase Area -->
+        <div class="polaroid-showcase">
+          <button id="btn-prev-photo" class="nav-arrow left-arrow" aria-label="Previous photograph">‹</button>
+
+          <!-- Current Active Polaroid Frame -->
+          <div class="polaroid-frame-wrapper">
+            <figure class="polaroid-frame" id="active-polaroid" tabindex="0" role="button" aria-label="Click to enlarge photograph">
+              <div class="washi-tape top-tape"></div>
+              <div class="polaroid-image-container">
+                <img id="polaroid-img" src="" alt="Best friends memory" class="polaroid-img">
+                <div class="photo-zoom-hint" aria-hidden="true">🔍 Click to zoom</div>
+              </div>
+              <figcaption class="polaroid-caption-box">
+                <p class="polaroid-caption" id="polaroid-caption"></p>
+                <span class="polaroid-date-stamp" id="polaroid-date"></span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <button id="btn-next-photo" class="nav-arrow right-arrow" aria-label="Next photograph">›</button>
+        </div>
+
+        <!-- Photo Counter and Dots -->
+        <div class="album-controls">
+          <span class="photo-counter" id="photo-counter">Photo 1 of 11</span>
+          <div class="photo-dots" id="photo-dots"></div>
+        </div>
+
+        <div class="screen-footer-nav">
+          <button class="btn btn-primary" data-back-to="screen-giftbox">
+            Back to our little gifts ♡
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =============================================================== -->
+    <!-- SCREEN 5: OUR MEMORIES TOGETHER 🫂 -->
+    <!-- =============================================================== -->
+    <section id="screen-memories" class="screen">
+      <div class="screen-content">
+        <nav class="back-nav">
+          <button class="btn btn-back" data-back-to="screen-giftbox">
+            ← Back to our little gifts ♡
+          </button>
+        </nav>
+
+        <div class="header-badge">Core Memories 🫂</div>
+        <h1 class="main-title" id="memories-title">Our Memories Together</h1>
+        <p class="subtitle" id="memories-subtitle">A little look back at all the chaos and love we share</p>
+
+        <!-- Memories Cards Container -->
+        <div class="memories-grid" id="memories-grid">
+          <!-- Dynamically populated from config.js -->
+        </div>
+
+        <div class="screen-footer-nav">
+          <button class="btn btn-primary" data-back-to="screen-giftbox">
+            Back to our little gifts ♡
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =============================================================== -->
+    <!-- SCREEN 6: MY POEM 🩵 -->
+    <!-- =============================================================== -->
+    <section id="screen-poem" class="screen">
+      <div class="screen-content narrow-content">
+        <nav class="back-nav">
+          <button class="btn btn-back" data-back-to="screen-giftbox">
+            ← Back to our little gifts ♡
+          </button>
+        </nav>
+
+        <div class="header-badge">Dedicated to You 🩵</div>
+        <h1 class="main-title script-title" id="poem-title">My Favourite Kind of Pretty</h1>
+        <p class="subtitle" id="poem-subtitle">A little rhyme dedicated to you ♡</p>
+
+        <!-- Decorative Stationery Scroll -->
+        <article class="poem-stationery">
+          <div class="pressed-flower top-left" aria-hidden="true">🌸</div>
+          <div class="pressed-flower bottom-right" aria-hidden="true">🌿</div>
+          <div class="washi-tape washi-top"></div>
+
+          <div class="poem-body" id="poem-body">
+            <!-- Dynamically populated stanzas from config.js -->
+          </div>
+
+          <div class="poem-decor-footer">
+            <span class="blue-bow">🎀</span>
+            <p class="poem-closing">Always your favourite fan ♡</p>
+          </div>
+        </article>
+
+        <div class="screen-footer-nav">
+          <button class="btn btn-primary" data-back-to="screen-giftbox">
+            Back to our little gifts ♡
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =============================================================== -->
+    <!-- SCREEN 7: THE FINAL SURPRISE — "ONE LAST THING" 💌 -->
+    <!-- =============================================================== -->
+    <section id="screen-final" class="screen">
+      <div class="screen-content narrow-content final-screen-inner">
+        <div class="header-badge">The Final Surprise 💙</div>
+        <h1 class="main-title script-title" id="final-heading">Wait... there's one last thing. 💙</h1>
+        
+        <!-- Small Cream Envelope tied with Blue Ribbon -->
+        <div class="final-envelope-area" id="final-envelope-container">
+          <div class="mini-envelope-model" id="final-envelope" role="button" tabindex="0" aria-label="Open Final Envelope">
+            <div class="mini-envelope-body">
+              <div class="mini-ribbon-horizontal"></div>
+              <div class="mini-ribbon-vertical"></div>
+              <div class="mini-bow">🎀</div>
+            </div>
+          </div>
+          <button id="btn-open-final" class="btn btn-accent btn-pulse">
+            <span>Open this, too ♡</span>
+          </button>
+        </div>
+
+        <!-- The Final Revealed Message & Photo (Revealed upon clicking envelope) -->
+        <article class="final-message-container hidden" id="final-message-container">
+          <div class="letter-sheet final-stationery">
+            <div class="washi-tape washi-top-blue"></div>
+            
+            <!-- Exact sentimental text paragraphs from config.js -->
+            <div class="final-message-body" id="final-message-body">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- Featured Photograph Together -->
+            <div class="final-photo-wrapper">
+              <div class="floating-hearts" aria-hidden="true">
+                <span class="heart-float h1">💙</span>
+                <span class="heart-float h2">✨</span>
+                <span class="heart-float h3">🩵</span>
+                <span class="heart-float h4">🤍</span>
+              </div>
+              <figure class="polaroid-frame final-polaroid">
+                <div class="polaroid-image-container">
+                  <img id="final-photo-img" src="" alt="Best friends forever" class="polaroid-img">
+                </div>
+                <figcaption class="polaroid-caption-box">
+                  <p class="polaroid-caption" id="final-photo-caption">Forever my favourite person 🫂💙</p>
+                </figcaption>
+              </figure>
+            </div>
+
+            <!-- Closing Quotes -->
+            <div class="final-quotes-area">
+              <blockquote class="closing-quote" id="final-closing-quote">
+                "If I had to do all those years again, I'd still choose you as my best friend. Every single time. 💙"
+              </blockquote>
+              <h2 class="bottom-greeting" id="final-bottom-greeting">
+                HAPPY BIRTHDAY ONCE AGAIN, MY LOVE! ♡
+              </h2>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =============================================================== -->
+  <!-- LIGHTBOX MODAL (FOR HIGH-RES POLAROID VIEWING) -->
+  <!-- =============================================================== -->
+  <div id="lightbox-modal" class="lightbox-modal hidden" role="dialog" aria-modal="true" aria-label="Expanded photograph view">
+    <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close enlarged photo">✕</button>
+      <div class="lightbox-polaroid">
+        <img id="lightbox-img" src="" alt="Enlarged photo view">
+        <p id="lightbox-caption" class="lightbox-caption"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
