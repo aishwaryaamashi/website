@@ -1286,7 +1286,7 @@ body {
   font-size: 0.95rem;
   line-height: 1.7;
   color: #2c3e50;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
   flex-grow: 1;
 }
 

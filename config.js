@@ -190,7 +190,7 @@ Forever & always your best friend 💙`,
         title: "Our never-ending walks",
         tag: "Since 8th Standard 🎒",
         icon: "🚶‍♀️",
-        photo: "./f657e161-67eb-4fd5-b9f2-9aff2c53f821.jfif",
+        photo: null,
         content: "We've been walking to school together since eighth standard. Same roads, same nonsense, and somehow we never ran out of things to talk about. Those walks turned into a whole never-ending story and remain one of my absolute favourite memories of us."
       },
       {
@@ -214,7 +214,7 @@ Forever & always your best friend 💙`,
         title: "Professional yap sessions",
         tag: "24/7 Hotlines 📱",
         icon: "🗣️",
-        photo: "./jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif",
+        photo: null,
         content: "Random reels, making videos at your house, unplanned late-night video calls, and talking about absolutely anything under the sun. No script, no reason, just pure unfiltered best friend conversation."
       },
       {
@@ -222,7 +222,7 @@ Forever & always your best friend 💙`,
         title: "Our unofficial second home",
         tag: "Second Home 🏠",
         icon: "🛋️",
-        photo: "./jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif",
+        photo: null,
         content: "Going to your house just to chill, spend time together, and do absolutely nothing particularly important. Just existing there like I practically live there—one of the most comforting feelings ever."
       },
       {
@@ -238,7 +238,7 @@ Forever & always your best friend 💙`,
         title: "Pandal-hopping adventures",
         tag: "Festive Chaos ✨",
         icon: "🪔",
-        photo: "./jjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif",
+        photo: null,
         content: "Our memories of visiting pandals together—the festive atmosphere, the crowds, the food, the Ganesh Chaturthi outings, and our usual chaos navigating through it all together."
       },
       {
