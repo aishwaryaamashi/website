@@ -20,6 +20,19 @@
   <!-- Particle Canvas for Confetti -->
   <canvas id="confetti-canvas" class="confetti-canvas" aria-hidden="true"></canvas>
 
+  <!-- Top Scrapbook Navigation Ribbon -->
+  <header class="top-ribbon-nav" id="top-ribbon-nav">
+    <nav class="nav-pills" aria-label="Website Sections">
+      <button class="nav-pill active" data-nav="screen-cake" title="Birthday Cake">🎂 Cake</button>
+      <button class="nav-pill" data-nav="screen-giftbox" title="Gift Box">🎁 Gifts</button>
+      <button class="nav-pill" data-nav="screen-letter" title="Birthday Letter">💌 Letter</button>
+      <button class="nav-pill" data-nav="screen-album" title="Polaroid Album">📸 Album</button>
+      <button class="nav-pill" data-nav="screen-memories" title="Our Memories">🫂 Memories</button>
+      <button class="nav-pill" data-nav="screen-poem" title="Poem">🎀 Poem</button>
+      <button class="nav-pill" data-nav="screen-final" title="One Last Thing">💙 One Last Thing</button>
+    </nav>
+  </header>
+
   <!-- Main App Wrapper -->
   <main class="app-wrapper">
 
@@ -148,14 +161,14 @@
           <div class="tap-hint" id="gift-tap-hint">Tap the box to open ✨</div>
         </div>
 
-        <!-- 4 Gift Cards Section (Revealed after opening box) -->
-        <div class="gift-cards-grid hidden" id="gift-cards-grid">
+        <!-- 4 Gift Cards Section -->
+        <div class="gift-cards-grid" id="gift-cards-grid">
           <!-- Card 1: Letter -->
           <div class="gift-card" id="card-letter" role="button" tabindex="0" data-target="screen-letter">
             <div class="card-pin">📌</div>
             <div class="card-badge">Gift 1</div>
             <div class="card-icon">💌</div>
-            <h3 class="card-title">A little letter for you</h3>
+            <h3 class="card-title">A little letter for you 💌</h3>
             <p class="card-desc">Straight from my heart to yours</p>
             <span class="card-action">Read Letter →</span>
           </div>
@@ -165,7 +178,7 @@
             <div class="card-pin">📌</div>
             <div class="card-badge">Gift 2</div>
             <div class="card-icon">📸</div>
-            <h3 class="card-title">Our Polaroid album</h3>
+            <h3 class="card-title">Our Polaroid album 📸</h3>
             <p class="card-desc">Little pieces of us through the years</p>
             <span class="card-action">Flip Photos →</span>
           </div>
@@ -175,7 +188,7 @@
             <div class="card-pin">📌</div>
             <div class="card-badge">Gift 3</div>
             <div class="card-icon">🫂</div>
-            <h3 class="card-title">Our memories together</h3>
+            <h3 class="card-title">Our memories together 🫂</h3>
             <p class="card-desc">The chaos, the walks, and the inside jokes</p>
             <span class="card-action">Relive Memories →</span>
           </div>
@@ -185,18 +198,18 @@
             <div class="card-pin">📌</div>
             <div class="card-badge">Gift 4</div>
             <div class="card-icon">🎀</div>
-            <h3 class="card-title">One little surprise for you</h3>
+            <h3 class="card-title">One little surprise for you 🎀</h3>
             <p class="card-desc">My favourite kind of pretty</p>
             <span class="card-action">Read Poem →</span>
           </div>
         </div>
 
         <!-- Exploration Footer & Direct jump to Final Surprise -->
-        <div class="gift-footer-action hidden" id="gift-footer-action">
+        <div class="gift-footer-action" id="gift-footer-action">
           <div class="explored-tracker" id="explored-tracker">
             Surprises explored: <span id="explored-count">0</span> of 4 💙
           </div>
-          <button id="btn-goto-final" class="btn btn-secondary">
+          <button id="btn-goto-final" class="btn btn-secondary btn-pulse" data-target="screen-final">
             <span>Wait... there's one last thing 💌</span>
           </button>
         </div>
@@ -220,7 +233,7 @@
 
         <!-- Animated Envelope -->
         <div class="envelope-container" id="letter-envelope-container">
-          <div class="envelope-wrapper" id="envelope-wrapper" role="button" tabindex="0" aria-label="Open Envelope">
+          <div class="envelope-wrapper opened" id="envelope-wrapper" role="button" tabindex="0" aria-label="Open Envelope">
             <div class="envelope-back"></div>
             <div class="envelope-flap" id="envelope-flap">
               <div class="wax-seal">💙</div>
@@ -233,20 +246,41 @@
                 <span class="letter-date" id="letter-date">Special Birthday Edition</span>
                 <span class="letter-stamp">💌</span>
               </div>
+
+              <!-- Placeholder Notice if no external letter file found -->
+              <div class="placeholder-notice" id="letter-placeholder-notice">
+                📌 <em>Note: No <code>letter.txt</code> file was found in your folder. You can easily edit or replace this letter anytime in <code>config.js</code>!</em>
+              </div>
+
               <div class="letter-body" id="letter-body">
-                <!-- Dynamically populated from config.js -->
+To my dearest best friend,
+
+Happy Happy Birthday! 🎂💙
+
+Words can never really be enough to tell you how grateful I am to have you in my life. Through every phase, every laugh, every breakdown, and every random walk home, you have been my constant, safe space.
+
+Thank you for being the person who understands my silence just as well as my endless chatter. Thank you for never judging my terrible jokes and for always being the first one to hype me up. 
+
+I hope this year brings you all the softness, success, warmth, and peace you so truly deserve. You are one of the purest, prettiest souls I know, inside and out.
+
+No matter where life takes us, remember that you'll always have me in your corner, cheering you on.
+
+Forever & always your best friend 💙
               </div>
               <div class="letter-footer">
-                <p class="letter-signature" id="letter-signature">Always your girl ♡</p>
+                <p class="letter-signature" id="letter-signature">With all my love, always ♡</p>
               </div>
             </article>
           </div>
-          <p class="tap-hint" id="envelope-tap-hint">Tap the envelope to read your letter ✉️</p>
+          <p class="tap-hint" id="envelope-tap-hint">Your letter is open below ♡</p>
         </div>
 
         <div class="screen-footer-nav">
-          <button class="btn btn-primary" data-back-to="screen-giftbox">
-            Back to our little gifts ♡
+          <button class="btn btn-secondary" data-back-to="screen-giftbox">
+            ← Back to our little gifts ♡
+          </button>
+          <button class="btn btn-primary" data-nav="screen-album">
+            Next: Our Polaroid Album 📸 →
           </button>
         </div>
       </div>
@@ -277,12 +311,12 @@
             <figure class="polaroid-frame" id="active-polaroid" tabindex="0" role="button" aria-label="Click to enlarge photograph">
               <div class="washi-tape top-tape"></div>
               <div class="polaroid-image-container">
-                <img id="polaroid-img" src="" alt="Best friends memory" class="polaroid-img">
+                <img id="polaroid-img" src="./234a0201-4546-4274-ac7c-08d7a2084954.jfif" alt="Best friends memory" class="polaroid-img">
                 <div class="photo-zoom-hint" aria-hidden="true">🔍 Click to zoom</div>
               </div>
               <figcaption class="polaroid-caption-box">
-                <p class="polaroid-caption" id="polaroid-caption"></p>
-                <span class="polaroid-date-stamp" id="polaroid-date"></span>
+                <p class="polaroid-caption" id="polaroid-caption">Our iconic swing spot & green t-shirt day 🌿✨</p>
+                <span class="polaroid-date-stamp" id="polaroid-date">College Days</span>
               </figcaption>
             </figure>
           </div>
@@ -297,8 +331,11 @@
         </div>
 
         <div class="screen-footer-nav">
-          <button class="btn btn-primary" data-back-to="screen-giftbox">
-            Back to our little gifts ♡
+          <button class="btn btn-secondary" data-back-to="screen-giftbox">
+            ← Back to our little gifts ♡
+          </button>
+          <button class="btn btn-primary" data-nav="screen-memories">
+            Next: Our Memories Together 🫂 →
           </button>
         </div>
       </div>
@@ -320,14 +357,126 @@
         <h1 class="main-title" id="memories-title">Our Memories Together</h1>
         <p class="subtitle" id="memories-subtitle">A little look back at all the chaos and love we share</p>
 
-        <!-- Memories Cards Container -->
+        <!-- Memories Cards Grid (Pre-populated with all 9 memories) -->
         <div class="memories-grid" id="memories-grid">
-          <!-- Dynamically populated from config.js -->
+          <!-- Memory 1 -->
+          <article class="memory-card">
+            <span class="memory-pin">📌</span>
+            <div class="memory-header">
+              <span class="memory-tag">Since 8th Standard 🎒</span>
+              <span class="memory-icon">🚶‍♀️</span>
+            </div>
+            <h3 class="memory-title">Our never-ending walks</h3>
+            <p class="memory-text">We've been walking to school together since eighth standard. Same roads, same nonsense, and somehow we never ran out of things to talk about. Those walks turned into a whole never-ending story and remain one of my absolute favourite memories of us.</p>
+            <div class="memory-photo-thumb" role="button" tabindex="0" data-lightbox="./f657e161-67eb-4fd5-b9f2-9aff2c53f821.jfif" data-caption="Our walking to school uniform days 🎒💙">
+              <img src="./f657e161-67eb-4fd5-b9f2-9aff2c53f821.jfif" alt="School walking days" loading="lazy">
+            </div>
+          </article>
+
+          <!-- Memory 2 -->
+          <article class="memory-card">
+            <span class="memory-pin">📌</span>
+            <div class="memory-header">
+              <span class="memory-tag">Package Deal 👯‍♀️</span>
+              <span class="memory-icon">❓</span>
+            </div>
+            <h3 class="memory-title">"Where is she?"</h3>
+            <p class="memory-text">When one of us was absent, everyone would instantly ask the other about her. We became such a familiar pair that people noticed the second one of us wasn't around. Like... why are you asking me? (Obviously because we're inseparable!)</p>
+          </article>
+
+          <!-- Memory 3 -->
+          <article class="memory-card">
+            <span class="memory-pin">📌</span>
+            <div class="memory-header">
+              <span class="memory-tag">Partners in Crime 🚨</span>
+              <span class="memory-icon">🪑</span>
+            </div>
+            <h3 class="memory-title">The seat-changing incidents</h3>
+            <p class="memory-text">Teachers literally used to change our seats because we talked so much together! Every time they separated us, it felt like they were trying to break up a criminal syndicate. And honestly? We still found ways to yap across the room.</p>
+          </article>
+
+          <!-- Memory 4 -->
+          <article class="memory-card">
+            <span class="memory-pin">📌</span>
+            <div class="memory-header">
+              <span class="memory-tag">24/7 Hotlines 📱</span>
+              <span class="memory-icon">🗣️</span>
+            </div>
+            <h3 class="memory-title">Professional yap sessions</h3>
+            <p class="memory-text">Random reels, making videos at your house, unplanned late-night video calls, and talking about absolutely anything under the sun. No script, no reason, just pure unfiltered best friend conversation.</p>
+            <div class="memory-photo-thumb" role="button" tabindex="0" data-lightbox="./jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif" data-caption="Shooting videos & mirror selfies 🪞🎬">
+              <img src="./jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif" alt="Yap sessions" loading="lazy">
+            </div>
+          </article>
+
+          <!-- Memory 5 -->
+          <article class="memory-card">
+            <span class="memory-pin">📌</span>
+            <div class="memory-header">
+              <span class="memory-tag">Second Home 🏠</span>
+              <span class="memory-icon">🛋️</span>
+            </div>
+            <h3 class="memory-title">Our unofficial second home</h3>
+            <p class="memory-text">Going to your house just to chill, spend time together, and do absolutely nothing particularly important. Just existing there like I practically live there—one of the most comforting feelings ever.</p>
+            <div class="memory-photo-thumb" role="button" tabindex="0" data-lightbox="./jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif" data-caption="Chilling in the bedroom doing nothing 🛋️✨">
+              <img src="./jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif" alt="Second home chilling" loading="lazy">
+            </div>
+          </article>
+
+          <!-- Memory 6 -->
+          <article class="memory-card">
+            <span class="memory-pin">📌</span>
+            <div class="memory-header">
+              <span class="memory-tag">Honors Degree ☕</span>
+              <span class="memory-icon">🍵</span>
+            </div>
+            <h3 class="memory-title">The gossip department</h3>
+            <p class="memory-text">Our iconic sessions of bitching about people together. At this point, we could give masterclasses and publish textbooks on our analysis. Unmatched therapy sessions honestly.</p>
+          </article>
+
+          <!-- Memory 7 -->
+          <article class="memory-card">
+            <span class="memory-pin">📌</span>
+            <div class="memory-header">
+              <span class="memory-tag">Festive Chaos ✨</span>
+              <span class="memory-icon">🪔</span>
+            </div>
+            <h3 class="memory-title">Pandal-hopping adventures</h3>
+            <p class="memory-text">Our memories of visiting pandals together—the festive atmosphere, the crowds, the food, the Ganesh Chaturthi outings, and our usual chaos navigating through it all together.</p>
+            <div class="memory-photo-thumb" role="button" tabindex="0" data-lightbox="./jjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif" data-caption="Festive night outings & fairy lights ✨🎈">
+              <img src="./jjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif" alt="Pandal hopping" loading="lazy">
+            </div>
+          </article>
+
+          <!-- Memory 8 -->
+          <article class="memory-card">
+            <span class="memory-pin">📌</span>
+            <div class="memory-header">
+              <span class="memory-tag">Unintentional Heroes 🦠</span>
+              <span class="memory-icon">🏖️</span>
+            </div>
+            <h3 class="memory-title">The accidental class holiday</h3>
+            <p class="memory-text">The time both of us got COVID and the entire class ended up getting an unexpected holiday because of us! Being sick was definitely not fun, but being responsible for the whole class getting a day off is definitely hall-of-fame material.</p>
+          </article>
+
+          <!-- Memory 9 -->
+          <article class="memory-card">
+            <span class="memory-pin">📌</span>
+            <div class="memory-header">
+              <span class="memory-tag">Core Memory 💃🏻</span>
+              <span class="memory-icon">🩹</span>
+            </div>
+            <h3 class="memory-title">The birthday Twirla incident</h3>
+            <p class="memory-text">On my birthday, when we both fell off a Twirla and you fractured your hand. Definitely chaotic, definitely terrifying in the moment, but now permanently etched in the 'legendary core memories' vault of our friendship.</p>
+          </article>
         </div>
 
         <div class="screen-footer-nav">
-          <button class="btn btn-primary" data-back-to="screen-giftbox">
-            Back to our little gifts ♡
+          <button class="btn btn-secondary" data-back-to="screen-giftbox">
+            ← Back to our little gifts ♡
+          </button>
+          <button class="btn btn-primary" data-nav="screen-poem">
+            Next: My Poem 🩵 →
           </button>
         </div>
       </div>
@@ -355,8 +504,36 @@
           <div class="pressed-flower bottom-right" aria-hidden="true">🌿</div>
           <div class="washi-tape washi-top"></div>
 
+          <!-- Placeholder Notice if no external poem file found -->
+          <div class="placeholder-notice" id="poem-placeholder-notice">
+            📌 <em>Note: No <code>poem.txt</code> file was found in your folder. You can easily edit or replace this poem anytime in <code>config.js</code> under <code>stanzas</code>!</em>
+          </div>
+
           <div class="poem-body" id="poem-body">
-            <!-- Dynamically populated stanzas from config.js -->
+            <div class="poem-stanza">
+              <p class="poem-line">There's a beauty in the way you laugh,</p>
+              <p class="poem-line">Unfiltered, loud, and true,</p>
+              <p class="poem-line">In all the silly little things</p>
+              <p class="poem-line">That make you simply you.</p>
+            </div>
+            <div class="poem-stanza">
+              <p class="poem-line">Not just the pretty smile you wear,</p>
+              <p class="poem-line">Or the kindness in your grace,</p>
+              <p class="poem-line">It’s the warmth you bring into my world,</p>
+              <p class="poem-line">And the light in every place.</p>
+            </div>
+            <div class="poem-stanza">
+              <p class="poem-line">Through walks to school and late night talks,</p>
+              <p class="poem-line">Through every changed seat and year,</p>
+              <p class="poem-line">You've been my constant, gentle calm,</p>
+              <p class="poem-line">My favourite person here.</p>
+            </div>
+            <div class="poem-stanza">
+              <p class="poem-line">So here's to you on your special day,</p>
+              <p class="poem-line">Soft and bright and free,</p>
+              <p class="poem-line">You will always be, without a doubt,</p>
+              <p class="poem-line">My favourite kind of pretty. 🩵</p>
+            </div>
           </div>
 
           <div class="poem-decor-footer">
@@ -366,8 +543,11 @@
         </article>
 
         <div class="screen-footer-nav">
-          <button class="btn btn-primary" data-back-to="screen-giftbox">
-            Back to our little gifts ♡
+          <button class="btn btn-secondary" data-back-to="screen-giftbox">
+            ← Back to our little gifts ♡
+          </button>
+          <button class="btn btn-accent btn-pulse" data-nav="screen-final">
+            Proceed to the Final Surprise 💙 →
           </button>
         </div>
       </div>
@@ -396,14 +576,20 @@
           </button>
         </div>
 
-        <!-- The Final Revealed Message & Photo (Revealed upon clicking envelope) -->
-        <article class="final-message-container hidden" id="final-message-container">
+        <!-- The Final Revealed Message & Photo -->
+        <article class="final-message-container" id="final-message-container">
           <div class="letter-sheet final-stationery">
             <div class="washi-tape washi-top-blue"></div>
             
-            <!-- Exact sentimental text paragraphs from config.js -->
+            <!-- Exact sentimental text paragraphs from user prompt -->
             <div class="final-message-body" id="final-message-body">
-              <!-- Dynamically populated -->
+              <p>To my favourite constant,</p>
+              <p>I think one of my favourite things about us is that we never really needed a reason to be together. Walking home from school, talking about absolutely nothing, laughing at the most random things… somehow, those became some of my favourite memories.</p>
+              <p>Now we're growing up, doing our own things, and figuring life out in different places. And even though things aren't exactly the same as they used to be, I'm so glad that I got to grow up with you.</p>
+              <p>If I could keep one thing from all these years, it would be having you in them.</p>
+              <p>So here's to all the memories we've already made, all the stories we haven't told each other yet, and all the random days that will eventually become our favourite memories again.</p>
+              <p>Happy birthday, my love. No matter how much life changes, I hope we always find our way back to each other. 💙</p>
+              <p>Always your girl ♡</p>
             </div>
 
             <!-- Featured Photograph Together -->
@@ -414,9 +600,9 @@
                 <span class="heart-float h3">🩵</span>
                 <span class="heart-float h4">🤍</span>
               </div>
-              <figure class="polaroid-frame final-polaroid">
+              <figure class="polaroid-frame final-polaroid" id="final-polaroid-frame" tabindex="0" role="button" aria-label="Click to enlarge photo">
                 <div class="polaroid-image-container">
-                  <img id="final-photo-img" src="" alt="Best friends forever" class="polaroid-img">
+                  <img id="final-photo-img" src="./d2c475c2-8ac7-427f-a9f4-c64706fad886.jfif" alt="Best friends forever hugging" class="polaroid-img">
                 </div>
                 <figcaption class="polaroid-caption-box">
                   <p class="polaroid-caption" id="final-photo-caption">Forever my favourite person 🫂💙</p>
@@ -435,6 +621,12 @@
             </div>
           </div>
         </article>
+
+        <div class="screen-footer-nav" style="margin-top: 2rem;">
+          <button class="btn btn-secondary" data-back-to="screen-giftbox">
+            ← Return to Gifts ♡
+          </button>
+        </div>
       </div>
     </section>
 

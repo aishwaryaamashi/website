@@ -5,12 +5,8 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Ensure config exists
-  const config = window.BIRTHDAY_CONFIG;
-  if (!config) {
-    console.error("Configuration file config.js not loaded!");
-    return;
-  }
+  // Safe config retrieval with fallback
+  const config = window.BIRTHDAY_CONFIG || (typeof BIRTHDAY_CONFIG !== 'undefined' ? BIRTHDAY_CONFIG : {});
 
   // -----------------------------------------------------------------
   // 1. STATE MANAGEMENT
@@ -21,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     giftBoxOpened: false,
     exploredGifts: new Set(),
     currentPhotoIndex: 0,
-    totalPhotos: config.photoAlbumScreen.photos.length,
+    totalPhotos: (config.photoAlbumScreen && config.photoAlbumScreen.photos) ? config.photoAlbumScreen.photos.length : 11,
     finalRevealed: false
   };
 
@@ -109,8 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const p = confettiParticles[i];
       p.x += p.vx;
       p.y += p.vy;
-      p.vy += 0.25; // gravity
-      p.vx *= 0.98; // drag
+      p.vy += 0.25;
+      p.vx *= 0.98;
       p.rotation += p.rotationSpeed;
       p.life -= 0.012;
       p.opacity = Math.max(0, p.life);
@@ -157,6 +153,12 @@ document.addEventListener('DOMContentLoaded', () => {
     state.currentScreen = targetScreenId;
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
+    // Update top ribbon active pill
+    document.querySelectorAll('.nav-pill').forEach(pill => {
+      const pillTarget = pill.getAttribute('data-nav');
+      pill.classList.toggle('active', pillTarget === targetScreenId);
+    });
+
     // Track explored gifts if visiting one of the 4 gifts
     if (['screen-letter', 'screen-album', 'screen-memories', 'screen-poem'].includes(targetScreenId)) {
       const giftKeyMap = {
@@ -169,12 +171,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Attach back button listeners
+  // Attach navigation listeners for [data-nav]
+  document.querySelectorAll('[data-nav]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = el.getAttribute('data-nav');
+      if (target) navigateTo(target);
+    });
+  });
+
+  // Attach back button listeners for [data-back-to]
   document.querySelectorAll('[data-back-to]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const backTarget = btn.getAttribute('data-back-to');
-      navigateTo(backTarget);
+      if (backTarget) navigateTo(backTarget);
+    });
+  });
+
+  // Attach target listeners for [data-target]
+  document.querySelectorAll('[data-target]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = el.getAttribute('data-target');
+      if (target) navigateTo(target);
     });
   });
 
@@ -201,8 +221,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnMakeWish) {
     btnMakeWish.addEventListener('click', () => {
       btnMakeWish.classList.add('hidden');
-      cakeSubtitle.textContent = config.cakeScreen.blowPrompt;
-      btnBlowCandles.classList.remove('hidden');
+      if (cakeSubtitle) {
+        cakeSubtitle.textContent = (config.cakeScreen && config.cakeScreen.blowPrompt) || "Okay, now blow out your candles!";
+      }
+      if (btnBlowCandles) {
+        btnBlowCandles.classList.remove('hidden');
+      }
     });
   }
 
@@ -227,8 +251,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Hide blow button, show success
       btnBlowCandles.classList.add('hidden');
-      cakeSubtitle.classList.add('hidden');
-      cakeSuccess.classList.remove('hidden');
+      if (cakeSubtitle) cakeSubtitle.classList.add('hidden');
+      if (cakeSuccess) cakeSuccess.classList.remove('hidden');
     });
   }
 
@@ -244,8 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // -----------------------------------------------------------------
   const giftBoxWrapper = document.getElementById('giftbox-interactive');
   const giftTapHint = document.getElementById('gift-tap-hint');
-  const giftCardsGrid = document.getElementById('gift-cards-grid');
-  const giftFooterAction = document.getElementById('gift-footer-action');
   const exploredCountEl = document.getElementById('explored-count');
   const btnGotoFinal = document.getElementById('btn-goto-final');
 
@@ -254,12 +276,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!state.giftBoxOpened) {
         state.giftBoxOpened = true;
         giftBoxWrapper.classList.add('opened');
-        if (giftTapHint) giftTapHint.textContent = "Tap any card below to explore! 💙";
-        
+        if (giftTapHint) giftTapHint.textContent = "Choose any gift card below to open! 💙";
         triggerConfetti(0.5, 0.4, 70);
-        
-        if (giftCardsGrid) giftCardsGrid.classList.remove('hidden');
-        if (giftFooterAction) giftFooterAction.classList.remove('hidden');
       }
     };
 
@@ -271,24 +289,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-
-  // Gift Card Click Handlers
-  document.querySelectorAll('.gift-card').forEach(card => {
-    const target = card.getAttribute('data-target');
-    const handleCardClick = () => {
-      if (target) {
-        navigateTo(target);
-      }
-    };
-
-    card.addEventListener('click', handleCardClick);
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        handleCardClick();
-      }
-    });
-  });
 
   function markGiftExplored(giftId) {
     state.exploredGifts.add(giftId);
@@ -311,48 +311,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  if (btnGotoFinal) {
-    btnGotoFinal.addEventListener('click', () => {
-      navigateTo('screen-final');
-    });
-  }
-
   // -----------------------------------------------------------------
   // 7. SCREEN 3: MY BIRTHDAY LETTER 💌
   // -----------------------------------------------------------------
-  const letterBody = document.getElementById('letter-body');
-  const letterDate = document.getElementById('letter-date');
-  const letterSignature = document.getElementById('letter-signature');
   const envelopeWrapper = document.getElementById('envelope-wrapper');
   const envelopeTapHint = document.getElementById('envelope-tap-hint');
 
-  if (letterBody) {
-    letterBody.textContent = config.letterScreen.letterContent;
-  }
-  if (letterDate) {
-    letterDate.textContent = config.letterScreen.date;
-  }
-  if (letterSignature) {
-    letterSignature.textContent = config.letterScreen.signature;
-  }
-
   if (envelopeWrapper) {
-    const handleEnvelopeClick = () => {
+    const handleEnvelopeClick = (e) => {
+      // Don't toggle if clicking inside the letter sheet text
+      if (e.target.closest('.letter-sheet')) return;
+
       envelopeWrapper.classList.toggle('opened');
       if (envelopeTapHint) {
         envelopeTapHint.textContent = envelopeWrapper.classList.contains('opened') 
-          ? "Tap envelope again to fold back ♡" 
+          ? "Your letter is open below ♡" 
           : "Tap envelope to open your letter ✉️";
       }
     };
 
     envelopeWrapper.addEventListener('click', handleEnvelopeClick);
-    envelopeWrapper.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        handleEnvelopeClick();
-      }
-    });
   }
 
   // -----------------------------------------------------------------
@@ -367,10 +345,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnPrevPhoto = document.getElementById('btn-prev-photo');
   const btnNextPhoto = document.getElementById('btn-next-photo');
 
+  const photosList = (config.photoAlbumScreen && config.photoAlbumScreen.photos) || [
+    { id: 1, src: "./234a0201-4546-4274-ac7c-08d7a2084954.jfif", caption: "Our iconic swing spot & green t-shirt day 🌿✨", date: "College Days", rotation: -2 },
+    { id: 2, src: "./3f6cc174-a625-4722-acf0-ccfd988cec5a.jfif", caption: "Sunny smiles & matching the vibe 🌸💙", date: "Best Moments", rotation: 3 },
+    { id: 3, src: "./d2c475c2-8ac7-427f-a9f4-c64706fad886.jfif", caption: "The tightest, most chaotic hug ever! 🫂❤️", date: "Pure Joy", rotation: -3 },
+    { id: 4, src: "./eae3afad-98ab-4d9b-ad65-b4eed8cdbcc2.jfif", caption: "Heart filters and looking at each other laughing 💕", date: "Unfiltered Chaos", rotation: 2 },
+    { id: 5, src: "./f657e161-67eb-4fd5-b9f2-9aff2c53f821.jfif", caption: "Uniform days, masks on, and hugging through it all 🎒💙", date: "School Era", rotation: -2 },
+    { id: 6, src: "./jjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif", caption: "Dressed up, fairy lights, and balloon night ✨🎈", date: "Night Adventures", rotation: 3 },
+    { id: 7, src: "./jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif", caption: "ID cards, sweaters, and late-night thumbs up 👍🏻🌙", date: "College Memories", rotation: -1 },
+    { id: 8, src: "./jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif", caption: "Saree edition & mirror selfie shenanigans 🥻🪞", date: "Desi Vibe", rotation: 2 },
+    { id: 9, src: "./jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif", caption: "Looking pretty together in the mirror ✨💄", date: "Out & About", rotation: -3 },
+    { id: 10, src: "./jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif", caption: "Chilling in the bedroom doing absolutely nothing 🏠🛋️", date: "Second Home", rotation: 1 },
+    { id: 11, src: "./jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj.jfif", caption: "Random goofy dancing and endless inside jokes 💃🏻✨", date: "Goofballs", rotation: -2 }
+  ];
+
   // Build dots
   if (photoDots) {
     photoDots.innerHTML = '';
-    config.photoAlbumScreen.photos.forEach((_, idx) => {
+    photosList.forEach((_, idx) => {
       const dot = document.createElement('button');
       dot.className = `photo-dot ${idx === 0 ? 'active' : ''}`;
       dot.setAttribute('aria-label', `Go to photo ${idx + 1}`);
@@ -380,11 +372,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderPhoto(index) {
-    const photos = config.photoAlbumScreen.photos;
-    if (!photos || photos.length === 0) return;
+    if (!photosList || photosList.length === 0) return;
 
-    state.currentPhotoIndex = (index + photos.length) % photos.length;
-    const current = photos[state.currentPhotoIndex];
+    state.currentPhotoIndex = (index + photosList.length) % photosList.length;
+    const current = photosList[state.currentPhotoIndex];
 
     if (polaroidImg) {
       polaroidImg.src = current.src;
@@ -397,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
       polaroidDate.textContent = current.date || "";
     }
     if (photoCounter) {
-      photoCounter.textContent = `Photo ${state.currentPhotoIndex + 1} of ${photos.length}`;
+      photoCounter.textContent = `Photo ${state.currentPhotoIndex + 1} of ${photosList.length}`;
     }
 
     if (activePolaroid) {
@@ -412,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Initial photo render
+  // Initial render
   renderPhoto(0);
 
   if (btnPrevPhoto) {
@@ -433,130 +424,39 @@ document.addEventListener('DOMContentLoaded', () => {
   // Lightbox trigger on Polaroid click
   if (activePolaroid) {
     activePolaroid.addEventListener('click', () => {
-      const current = config.photoAlbumScreen.photos[state.currentPhotoIndex];
+      const current = photosList[state.currentPhotoIndex];
       openLightbox(current.src, current.caption);
     });
     activePolaroid.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        const current = config.photoAlbumScreen.photos[state.currentPhotoIndex];
+        const current = photosList[state.currentPhotoIndex];
         openLightbox(current.src, current.caption);
       }
     });
   }
 
   // -----------------------------------------------------------------
-  // 9. SCREEN 5: OUR MEMORIES TOGETHER 🫂
+  // 9. SCREEN 5: MEMORIES LIGHTBOX HOOKS
   // -----------------------------------------------------------------
-  const memoriesGrid = document.getElementById('memories-grid');
-
-  if (memoriesGrid) {
-    memoriesGrid.innerHTML = '';
-    config.memoriesScreen.memories.forEach(mem => {
-      const card = document.createElement('article');
-      card.className = 'memory-card';
-
-      let photoMarkup = '';
-      if (mem.photo) {
-        photoMarkup = `
-          <div class="memory-photo-thumb" role="button" tabindex="0" aria-label="Enlarge memory photo">
-            <img src="${mem.photo}" alt="${mem.title}" loading="lazy">
-          </div>
-        `;
-      }
-
-      card.innerHTML = `
-        <span class="memory-pin">📌</span>
-        <div class="memory-header">
-          <span class="memory-tag">${mem.tag}</span>
-          <span class="memory-icon">${mem.icon}</span>
-        </div>
-        <h3 class="memory-title">${mem.title}</h3>
-        <p class="memory-text">${mem.content}</p>
-        ${photoMarkup}
-      `;
-
-      // Attach thumbnail lightbox click if photo exists
-      if (mem.photo) {
-        const thumb = card.querySelector('.memory-photo-thumb');
-        if (thumb) {
-          thumb.addEventListener('click', (e) => {
-            e.stopPropagation();
-            openLightbox(mem.photo, mem.title);
-          });
-          thumb.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              openLightbox(mem.photo, mem.title);
-            }
-          });
-        }
-      }
-
-      memoriesGrid.appendChild(card);
+  document.querySelectorAll('[data-lightbox]').forEach(thumb => {
+    thumb.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const src = thumb.getAttribute('data-lightbox');
+      const cap = thumb.getAttribute('data-caption');
+      openLightbox(src, cap);
     });
-  }
+  });
 
   // -----------------------------------------------------------------
-  // 10. SCREEN 6: MY POEM 🩵 ("My Favourite Kind of Pretty")
-  // -----------------------------------------------------------------
-  const poemBody = document.getElementById('poem-body');
-
-  if (poemBody) {
-    poemBody.innerHTML = '';
-    config.poemScreen.stanzas.forEach((stanzaLines, sIdx) => {
-      const stanzaEl = document.createElement('div');
-      stanzaEl.className = 'poem-stanza';
-      stanzaEl.style.animationDelay = `${sIdx * 0.25}s`;
-
-      stanzaLines.forEach(line => {
-        const lineEl = document.createElement('p');
-        lineEl.className = 'poem-line';
-        lineEl.textContent = line;
-        stanzaEl.appendChild(lineEl);
-      });
-
-      poemBody.appendChild(stanzaEl);
-    });
-  }
-
-  // -----------------------------------------------------------------
-  // 11. SCREEN 7: THE FINAL SURPRISE — "ONE LAST THING" 💌
+  // 10. SCREEN 7: THE FINAL SURPRISE — "ONE LAST THING" 💌
   // -----------------------------------------------------------------
   const finalEnvelope = document.getElementById('final-envelope');
   const btnOpenFinal = document.getElementById('btn-open-final');
   const finalEnvelopeContainer = document.getElementById('final-envelope-container');
   const finalMessageContainer = document.getElementById('final-message-container');
-  const finalMessageBody = document.getElementById('final-message-body');
-  const finalPhotoImg = document.getElementById('final-photo-img');
-  const finalPhotoCaption = document.getElementById('final-photo-caption');
-  const finalClosingQuote = document.getElementById('final-closing-quote');
-  const finalBottomGreeting = document.getElementById('final-bottom-greeting');
+  const finalPolaroidFrame = document.getElementById('final-polaroid-frame');
 
-  // Hydrate final content
-  if (finalMessageBody) {
-    finalMessageBody.innerHTML = '';
-    config.finalScreen.messageParagraphs.forEach(para => {
-      const p = document.createElement('p');
-      p.textContent = para;
-      finalMessageBody.appendChild(p);
-    });
-  }
-
-  if (finalPhotoImg) {
-    finalPhotoImg.src = config.finalScreen.finalPhoto;
-  }
-  if (finalPhotoCaption) {
-    finalPhotoCaption.textContent = config.finalScreen.finalPhotoCaption;
-  }
-  if (finalClosingQuote) {
-    finalClosingQuote.textContent = `"${config.finalScreen.closingQuote}"`;
-  }
-  if (finalBottomGreeting) {
-    finalBottomGreeting.textContent = config.finalScreen.bottomGreeting;
-  }
-
-  // Trigger final reveal
   function revealFinalSurprise() {
     if (state.finalRevealed) return;
     state.finalRevealed = true;
@@ -574,19 +474,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (finalEnvelope) {
     finalEnvelope.addEventListener('click', revealFinalSurprise);
-    finalEnvelope.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        revealFinalSurprise();
-      }
-    });
   }
   if (btnOpenFinal) {
     btnOpenFinal.addEventListener('click', revealFinalSurprise);
   }
 
+  if (finalPolaroidFrame) {
+    finalPolaroidFrame.addEventListener('click', () => {
+      const finalSrc = (config.finalScreen && config.finalScreen.finalPhoto) || "./d2c475c2-8ac7-427f-a9f4-c64706fad886.jfif";
+      const finalCap = (config.finalScreen && config.finalScreen.finalPhotoCaption) || "Forever my favourite person 🫂💙";
+      openLightbox(finalSrc, finalCap);
+    });
+  }
+
   // -----------------------------------------------------------------
-  // 12. GLOBAL LIGHTBOX MODAL
+  // 11. GLOBAL LIGHTBOX MODAL
   // -----------------------------------------------------------------
   const lightboxModal = document.getElementById('lightbox-modal');
   const lightboxImg = document.getElementById('lightbox-img');

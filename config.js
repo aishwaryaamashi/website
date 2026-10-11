@@ -3,14 +3,11 @@
  * 💙 BIRTHDAY WEBSITE CONFIGURATION FILE (config.js) 💙
  * ===================================================================
  * 
- * Welcome! This file contains ALL the text, photos, captions, memories, 
- * and settings for your best friend's birthday website.
- * 
- * You can edit any text here easily without touching the HTML or CSS.
- * Just change the text between the quotes `...` or "..."!
+ * Central configuration for your best friend's birthday website.
+ * All text, photos, captions, memories, and settings are defined here.
  */
 
-const BIRTHDAY_CONFIG = {
+window.BIRTHDAY_CONFIG = {
   // Best Friend's Name / Nickname
   friendName: "My Pretty Girl",
   
@@ -60,21 +57,19 @@ const BIRTHDAY_CONFIG = {
       }
     ],
     readyForFinalText: "Ready for one last little surprise? ✨",
-    finalSurpriseButton: "Open the final surprise 💙"
+    finalSurpriseButton: "Wait... there's one last thing 💌"
   },
 
   // -----------------------------------------------------------------
   // SCREEN 3: MY BIRTHDAY LETTER 💌
   // -----------------------------------------------------------------
-  // IMPORTANT: Since no separate letter file was provided in the folder,
-  // we've created this placeholder for you. You can paste your EXACT letter
-  // below inside the backticks ``. All your paragraphs and line breaks 
-  // will be preserved!
+  // NOTE: No letter.txt / letter.docx was found in the project folder.
+  // Below is the clearly labeled placeholder. Paste your exact letter here!
   letterScreen: {
     title: "A little letter for you ♡",
     date: "A special note for your special day",
-    
-    // [PLACEHOLDER - REPLACE WITH YOUR ACTUAL LETTER IF DESIRED]
+    isPlaceholder: true,
+    missingNotice: "📌 Note: No 'letter.txt' file was found in your folder. You can easily paste your real letter into config.js under letterContent!",
     letterContent: `To my dearest best friend,
 
 Happy Happy Birthday! 🎂💙
@@ -96,8 +91,7 @@ Forever & always your best friend 💙`,
   // -----------------------------------------------------------------
   // SCREEN 4: OUR POLAROID PHOTO ALBUM 📸
   // -----------------------------------------------------------------
-  // Uses your actual photos from the workspace folder.
-  // You can easily re-order them, change captions, or adjust rotations!
+  // Actual photographs from your folder. Captions are editable placeholders.
   photoAlbumScreen: {
     title: "Little pieces of us ♡",
     subtitle: "A digital scrapbook of our favourite moments together",
@@ -186,8 +180,7 @@ Forever & always your best friend 💙`,
   // -----------------------------------------------------------------
   // SCREEN 5: OUR MEMORIES TOGETHER 🫂
   // -----------------------------------------------------------------
-  // Your 9 real friendship memories formatted cleanly.
-  // You can customize the stories, icons, or attached photo paths!
+  // All 9 real memories from your prompt:
   memoriesScreen: {
     title: "Our Memories Together 🫂",
     subtitle: "A little look back at all the chaos and love we share",
@@ -271,13 +264,13 @@ Forever & always your best friend 💙`,
   // -----------------------------------------------------------------
   // SCREEN 6: MY POEM 🩵
   // -----------------------------------------------------------------
-  // Heading: "My Favourite Kind of Pretty"
-  // If you have your exact poem, you can paste its stanzas below!
+  // NOTE: No poem.txt was found in your project folder.
+  // Below is the clearly labeled placeholder. Paste your exact poem verses here!
   poemScreen: {
     heading: "My Favourite Kind of Pretty",
     subheading: "A little rhyme dedicated to you ♡",
-    
-    // [PLACEHOLDER - REPLACE WITH YOUR EXACT POEM LINES]
+    isPlaceholder: true,
+    missingNotice: "📌 Note: No 'poem.txt' file was found in your folder. You can easily paste your real poem into config.js under stanzas!",
     stanzas: [
       [
         "There's a beauty in the way you laugh,",
@@ -310,7 +303,6 @@ Forever & always your best friend 💙`,
   // -----------------------------------------------------------------
   // SCREEN 7: THE FINAL SURPRISE — "ONE LAST THING" 💌
   // -----------------------------------------------------------------
-  // The sentimental closing screen of the website.
   finalScreen: {
     heading: "Wait... there's one last thing. 💙",
     envelopeButtonText: "Open this, too ♡",
@@ -326,7 +318,7 @@ Forever & always your best friend 💙`,
       "Always your girl ♡"
     ],
     
-    // Featured photo of the two of you together hugging
+    // Configurable photo of the two of you together hugging
     finalPhoto: "./d2c475c2-8ac7-427f-a9f4-c64706fad886.jfif",
     finalPhotoCaption: "Forever my favourite person 🫂💙",
     
@@ -335,3 +327,5 @@ Forever & always your best friend 💙`,
     bottomGreeting: "HAPPY BIRTHDAY ONCE AGAIN, MY LOVE! ♡"
   }
 };
+
+var BIRTHDAY_CONFIG = window.BIRTHDAY_CONFIG;
